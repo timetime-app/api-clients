@@ -1,0 +1,3987 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "timetime",
+    "description": "timetime API",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "https://api.timetime.in",
+      "description": "The timetime API server."
+    }
+  ],
+  "security": [
+    {
+      "HttpAuth": []
+    }
+  ],
+  "paths": {
+    "/v1/users/{id}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "operationId": "getUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "The authenticated user can't access to the requested user.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The user does not exist.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserModel"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "The user profile response.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "operationId": "putProfile",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutProfileBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "409": {
+            "description": "The 'slug' is not available.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Some field is not valid.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The user does not exist.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The authenticated user can't modify this user.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "The profile has been updated successfully.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "user"
+        ],
+        "operationId": "patchUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchUserModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/resources/{id}": {
+      "get": {
+        "tags": [
+          "resources"
+        ],
+        "operationId": "getResource",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Resource"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "resources"
+        ],
+        "operationId": "putResource",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutResource"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unit"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "resources"
+        ],
+        "operationId": "deleteResource",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unit"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/resource-groups/{id}": {
+      "get": {
+        "tags": [
+          "resources"
+        ],
+        "operationId": "getResourceGroup",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceGroupModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "resources"
+        ],
+        "operationId": "putResourceGroup",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutResourceGroup"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unit"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "resources"
+        ],
+        "operationId": "deleteResourceGroup",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unit"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/public-profiles/{id}": {
+      "get": {
+        "tags": [
+          "public-profile"
+        ],
+        "operationId": "getPublicProfile",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicProfile"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "public-profile"
+        ],
+        "operationId": "putPublicProfile",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublicProfileWriteModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Public profile has been created or updated successfully.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "There is some problem with the received public profile.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "public-profile"
+        ],
+        "operationId": "deletePublicProfile",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unit"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/organizations/{id}": {
+      "put": {
+        "tags": [
+          "organizations"
+        ],
+        "operationId": "putOrganization",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutOrganization"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unit"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "organizations"
+        ],
+        "operationId": "deleteOrganizationMember_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unit"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/external-bookings/{id}": {
+      "put": {
+        "tags": [
+          "booking"
+        ],
+        "operationId": "createExternalBooking",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalBooking"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unit"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/event-types/{id}": {
+      "get": {
+        "tags": [
+          "event-type"
+        ],
+        "operationId": "getEventType",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetEventTypeModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "event-type"
+        ],
+        "operationId": "putEventType",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutEventTypeModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "event-type"
+        ],
+        "operationId": "delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unit"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/organizations/{orgId}/invitations": {
+      "post": {
+        "tags": [
+          "organizations"
+        ],
+        "operationId": "postOrganizationMember",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InviteOrganizationMember"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unit"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/login": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "operationId": "login",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Referer",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-TT-Impersonated-User-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserModel"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v1/google-consent": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "operationId": "postGoogleConsent",
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GoogleConsentBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unit"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/external-webhook-receiver-example": {
+      "post": {
+        "tags": [
+          "webhook"
+        ],
+        "operationId": "receiveWebhook",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "The webhook was processed successfully.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "The webhook processing job was scheduled successfully.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/external-booking-validation-example": {
+      "post": {
+        "tags": [
+          "booking"
+        ],
+        "operationId": "externalValidationExample",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalBookingValidationModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "The booking is not valid for the configured external system.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Booking has been validated successfully, so TimeTime can proceed.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v1/consent": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "operationId": "postThirdPartyConsent",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThirdPartyConsentBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unit"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bookings": {
+      "get": {
+        "tags": [
+          "booking"
+        ],
+        "operationId": "listBookings",
+        "parameters": [
+          {
+            "name": "eventTypesUserId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "days",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "maximum": 50,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int64",
+              "default": 7
+            }
+          },
+          {
+            "name": "eventTypeId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingsList"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "booking"
+        ],
+        "operationId": "createBooking",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBookingRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bookings/{id}/cancellation": {
+      "post": {
+        "tags": [
+          "booking"
+        ],
+        "operationId": "cancel",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelBookingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The booking has been cancelled.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unit"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Either someone else already cancelled the booking or a previous request for cancelling the booking by this user was already processed with a different reason.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unit"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v1/api-keys": {
+      "get": {
+        "tags": [
+          "api-key"
+        ],
+        "operationId": "listUserApiKeys",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiKeysListModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "api-key"
+        ],
+        "operationId": "createApiKey",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateApiKeyBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateApiKeyResponseModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/accepted-org-invitations": {
+      "post": {
+        "tags": [
+          "organizations"
+        ],
+        "operationId": "postOrganizationMember_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcceptedOrganizationInvite"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unit"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/organizations/{orgId}/members/{userId}": {
+      "delete": {
+        "tags": [
+          "organizations"
+        ],
+        "operationId": "deleteOrganizationMember",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "organizations"
+        ],
+        "operationId": "patchOrganizationMembership",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchOrganizationMembership"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "operationId": "listUsers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListUsersResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/third-party-calendar-events": {
+      "get": {
+        "tags": [
+          "booking"
+        ],
+        "operationId": "getThirdPartyCalendarEventsByEventType",
+        "parameters": [
+          {
+            "name": "eventTypeId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "\nThe starting date to get the availability in ISO-8601 format, example: `2021-01-01`.\n\nIf the parameter is not provided, the current day in the UTC time zone is used.\n            ",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "days",
+            "in": "query",
+            "description": "\nStarting from the 'from' value, this sets the limit day to verify the event availability.\n\nMinimum allowed is `1`, and maximum is `14`.\n            ",
+            "required": false,
+            "schema": {
+              "maximum": 14,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int64",
+              "default": 7
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with the appointments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThirdPartyCalendarEventsList"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The event type doesn't exist.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/shared-public-profiles/{slug}": {
+      "get": {
+        "tags": [
+          "public-profile"
+        ],
+        "operationId": "getSharedPublicProfile",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicProfile"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v1/resources": {
+      "get": {
+        "tags": [
+          "resources"
+        ],
+        "operationId": "listResources",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourcesList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/resource-groups": {
+      "get": {
+        "tags": [
+          "resources"
+        ],
+        "operationId": "listResourceGroups",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceGroupsListModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/public-profiles": {
+      "get": {
+        "tags": [
+          "public-profile"
+        ],
+        "operationId": "listPublicProfiles",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicProfilesList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/organizations": {
+      "get": {
+        "tags": [
+          "organizations"
+        ],
+        "operationId": "listOrganizations",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationsList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/organizations/{orgId}/members": {
+      "get": {
+        "tags": [
+          "organizations"
+        ],
+        "operationId": "listOrganizationMembers",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationMembersList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/me": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "operationId": "getCurrentUser",
+        "responses": {
+          "200": {
+            "description": "The logged user profile response.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The authenticated user can't access to the requested user.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The user does not exist.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/event-types": {
+      "get": {
+        "tags": [
+          "event-type"
+        ],
+        "operationId": "listEventTypesByOwnerId",
+        "parameters": [
+          {
+            "name": "ownerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventTypesListBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/event-types/{id}/availability": {
+      "get": {
+        "tags": [
+          "event-type"
+        ],
+        "operationId": "getEventTypeAvailability",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "\nThe event type identifier. This endpoint admits 2 different ways for identifying the event type:\n\n1. The event type `UUID` (the same used when creating the event type).\n2. The combination of the event owner slug + the event type slug, concatenated by ':', example:\n`GET /v1/event-types/event-owner-slug:event-type-slug/availability`\n            ",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "\nThe starting date to get the availability in ISO-8601 format, example: `2021-01-01`.\n\nIf the parameter is not provided, the current day in the UTC time zone is used.\n            ",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "days",
+            "in": "query",
+            "description": "\nStarting from the 'from' value, this sets the limit day to verify the event availability.\n\nMinimum allowed is `1`, and maximum is `14`.\n            ",
+            "required": false,
+            "schema": {
+              "maximum": 43,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int64",
+              "default": 7
+            }
+          },
+          {
+            "name": "units",
+            "in": "query",
+            "description": "\nFor bookings with multiple units (e.g. a party booking a table in a restaurant) this is the parameter\nthat specifies how many units need to be available to consider each time slot free and therefore bookable.\n\nOnly positive values are allowed.\n            ",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "timeZone",
+            "in": "query",
+            "description": "\nThe TimeZone id (IANA) to be used in combination with the \"from\" parameter to calculate the availability.\n            ",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "GMT"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "The event type doesn't exist.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Successful response with the availability.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventTypeAvailabilityModel"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v1/bookings/{id}": {
+      "get": {
+        "tags": [
+          "booking"
+        ],
+        "operationId": "getBooking",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicBookingModel"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PutProfileBody": {
+        "required": [
+          "locale",
+          "slug",
+          "timeZone"
+        ],
+        "type": "object",
+        "properties": {
+          "slug": {
+            "maxLength": 36,
+            "minLength": 2,
+            "pattern": "^[a-zà-ú0-9\\uD83C-\\uDBFF\\uDC00-\\uDFFF]+(?:-[a-zà-ú0-9\\uD83C-\\uDBFF\\uDC00-\\uDFFF]+)*$",
+            "type": "string"
+          },
+          "timeZone": {
+            "type": "string"
+          },
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en-US",
+              "es-ES"
+            ]
+          },
+          "clientState": {
+            "maxLength": 65535,
+            "minLength": 0,
+            "type": "string"
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "maxLength": 256,
+              "minLength": 0,
+              "type": "string"
+            }
+          }
+        }
+      },
+      "AvailableInGroupRule": {
+        "required": [
+          "group",
+          "min"
+        ],
+        "type": "object",
+        "properties": {
+          "group": {
+            "$ref": "#/components/schemas/ResourceGroupId"
+          },
+          "min": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "BookingRules": {
+        "required": [
+          "enabled"
+        ],
+        "type": "object",
+        "properties": {
+          "maxConcurrentBookings": {
+            "minimum": 1,
+            "type": "integer",
+            "description": "Limits how many concurrent bookings for this event type can happen at the same time. E.G, If it is set to 1, after one booking, the time slot is not available anymore. If null, then unlimited bookings can be made for the same time slot (unless 'availableUnits' is set).",
+            "format": "int32"
+          },
+          "repeatingAvailability": {
+            "$ref": "#/components/schemas/RepeatingAvailabilityModel"
+          },
+          "checkAvailabilityInCalendars": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ThirdPartyCalendarId"
+            }
+          },
+          "minBookingNotice": {
+            "type": "string"
+          },
+          "maxBookingNotice": {
+            "type": "string"
+          },
+          "beforeBuffer": {
+            "type": "string"
+          },
+          "afterBuffer": {
+            "type": "string"
+          },
+          "units": {
+            "$ref": "#/components/schemas/Units"
+          },
+          "busyIntervals": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InstantInterval"
+            }
+          },
+          "resourceRules": {
+            "$ref": "#/components/schemas/ResourceRules"
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "When set to false, it will never be available."
+          },
+          "maxBookingsPerTimeUnit": {
+            "$ref": "#/components/schemas/MaxBookingsPerTimeUnit"
+          }
+        }
+      },
+      "InstantInterval": {
+        "required": [
+          "end",
+          "start"
+        ],
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "MaxBookingsPerTimeUnit": {
+        "type": "object",
+        "properties": {
+          "perHour": {
+            "minimum": 1,
+            "type": "integer",
+            "description": "Max bookings allowed per natural hour.",
+            "format": "int32"
+          },
+          "perDay": {
+            "minimum": 1,
+            "type": "integer",
+            "description": "Max bookings allowed per natural day. The start of the day is calculated considering the event & user's timezone.",
+            "format": "int32"
+          },
+          "perWeek": {
+            "minimum": 1,
+            "type": "integer",
+            "description": "Max bookings per natural week. Starting on Monday, and the the starting hour is calculated considering the event & user's timezone.",
+            "format": "int32"
+          },
+          "perMonth": {
+            "minimum": 1,
+            "type": "integer",
+            "description": "Max bookings per natural month. The the starting hour for the first day of the month is calculated considering the event & user's timezone.",
+            "format": "int32"
+          }
+        }
+      },
+      "PutResource": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 256,
+            "minLength": 0,
+            "type": "string"
+          },
+          "bookingRules": {
+            "$ref": "#/components/schemas/BookingRules"
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "maxLength": 256,
+              "minLength": 0,
+              "type": "string"
+            }
+          }
+        }
+      },
+      "RepeatingAvailabilityModel": {
+        "required": [
+          "timeZone",
+          "weekly"
+        ],
+        "type": "object",
+        "properties": {
+          "timeZone": {
+            "type": "string"
+          },
+          "weekly": {
+            "type": "object",
+            "additionalProperties": {
+              "uniqueItems": true,
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/TimeRange"
+              }
+            }
+          }
+        }
+      },
+      "ResourceGroupId": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "ResourceId": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "description": "Linked resources are useful to specify dependencies among different resources/event types. When linked resources are configured, the availability of those will be taken into account for the event type availability check. Also, when a booking is performed, these linked resources will be booked as well"
+      },
+      "ResourceRules": {
+        "type": "object",
+        "properties": {
+          "availableInGroups": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AvailableInGroupRule"
+            }
+          },
+          "linkedResources": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "Linked resources are useful to specify dependencies among different resources/event types. When linked resources are configured, the availability of those will be taken into account for the event type availability check. Also, when a booking is performed, these linked resources will be booked as well",
+            "items": {
+              "$ref": "#/components/schemas/ResourceId"
+            }
+          }
+        }
+      },
+      "ThirdPartyCalendarId": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "TimeRange": {
+        "required": [
+          "end",
+          "start"
+        ],
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          }
+        }
+      },
+      "Units": {
+        "type": "object",
+        "properties": {
+          "availableUnits": {
+            "minimum": 1,
+            "type": "integer",
+            "description": "For event types accepting multi-bookings, this sets the maximum number of people/resources that can book / be booked at the same time. Examples: \n- Restaurants: This is maximum number of people that can be attended at the same time.\n- Bikes store: This is the amount of bikes available.",
+            "format": "int32"
+          },
+          "minUnitsPerBooking": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxUnitsPerBooking": {
+            "minimum": 1,
+            "type": "integer",
+            "description": "Whenever the 'availableUnits' is set, this sets the limit of how many 'units' can be booked per booking. Examples: \n- Restaurants: This the maximum party size that can make a reservation, for example, up to groups of 10 people max.\n- City tour: The maximum number of people that each of your tour guides can manage.",
+            "format": "int32"
+          },
+          "unitsLabel": {
+            "maxLength": 32,
+            "minLength": 0,
+            "type": "string",
+            "description": "Units is a very generic concept, depending on the use case units could be referring to 'people', to 'bikes'... etc. The units label is to be able to set a custom label for the units field, that will appear in the booking page next to the 'units' selector."
+          }
+        }
+      },
+      "Unit": {
+        "type": "object"
+      },
+      "PutResourceGroup": {
+        "required": [
+          "name",
+          "resources"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 256,
+            "minLength": 0,
+            "type": "string"
+          },
+          "resources": {
+            "maxItems": 4096,
+            "minItems": 0,
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PutResourceInGroup"
+            }
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "maxLength": 256,
+              "minLength": 0,
+              "type": "string"
+            }
+          }
+        }
+      },
+      "PutResourceInGroup": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "PublicProfileLink": {
+        "required": [
+          "link",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 256,
+            "minLength": 0,
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 4096,
+            "minLength": 0,
+            "type": "string"
+          },
+          "link": {
+            "type": "string",
+            "format": "uri"
+          },
+          "imageUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "maxLength": 256,
+              "minLength": 0,
+              "type": "string"
+            }
+          }
+        }
+      },
+      "PublicProfileWriteModel": {
+        "required": [
+          "name",
+          "slug"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 256,
+            "minLength": 1,
+            "type": "string"
+          },
+          "slug": {
+            "maxLength": 36,
+            "minLength": 1,
+            "pattern": "^[a-zà-ú0-9\\uD83C-\\uDBFF\\uDC00-\\uDFFF]+(?:-[a-zà-ú0-9\\uD83C-\\uDBFF\\uDC00-\\uDFFF]+)*$",
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 4096,
+            "minLength": 0,
+            "type": "string"
+          },
+          "links": {
+            "maxItems": 256,
+            "minItems": 0,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicProfileLink"
+            }
+          },
+          "imageUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "maxLength": 256,
+              "minLength": 0,
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ProblemDetail": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "format": "uri"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "instance": {
+            "type": "string",
+            "format": "uri"
+          },
+          "properties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "PutOrganization": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 256,
+            "minLength": 0,
+            "type": "string"
+          },
+          "image": {
+            "type": "string",
+            "format": "uri"
+          },
+          "domain": {
+            "maxLength": 128,
+            "minLength": 0,
+            "type": "string"
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "maxLength": 256,
+              "minLength": 0,
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ExternalBooking": {
+        "required": [
+          "eventTypeId",
+          "interval"
+        ],
+        "type": "object",
+        "properties": {
+          "eventTypeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "interval": {
+            "$ref": "#/components/schemas/InstantInterval"
+          },
+          "bookerEmail": {
+            "type": "string"
+          },
+          "answers": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "notes": {
+            "maxLength": 2048,
+            "minLength": 0,
+            "type": "string"
+          },
+          "units": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "resources": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UsedBookingResource"
+            }
+          }
+        }
+      },
+      "UsedBookingResource": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "BookerPhoneLocation": {
+        "required": [
+          "questionId"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LocationModel"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "questionId": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "BookerSelectionLocation": {
+        "required": [
+          "questionId"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LocationModel"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "questionId": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "BookingNotificationsModel": {
+        "type": "object",
+        "properties": {
+          "confirmation": {
+            "$ref": "#/components/schemas/ConfirmationNotificationsModel"
+          },
+          "reminders": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReminderNotificationsModel"
+            }
+          }
+        }
+      },
+      "ConfirmationNotificationsModel": {
+        "type": "object",
+        "properties": {
+          "sms": {
+            "$ref": "#/components/schemas/SmsNotificationModel"
+          }
+        }
+      },
+      "EmailQuestion": {
+        "required": [
+          "id",
+          "label"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EventTypeQuestion"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "canBeDeleted": {
+                "type": "boolean",
+                "readOnly": true
+              }
+            }
+          }
+        ]
+      },
+      "EventTypeQuestion": {
+        "required": [
+          "id",
+          "label",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "canBeDeleted": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "type"
+        }
+      },
+      "FixedLocation": {
+        "required": [
+          "freeText"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LocationModel"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "freeText": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "GoogleMeetLocation": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LocationModel"
+          }
+        ]
+      },
+      "ImageQuestion": {
+        "required": [
+          "id",
+          "label"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EventTypeQuestion"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "canBeDeleted": {
+                "type": "boolean",
+                "readOnly": true
+              }
+            }
+          }
+        ]
+      },
+      "LocationModel": {
+        "required": [
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "type"
+        }
+      },
+      "LocationOptionModel": {
+        "required": [
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "type"
+        }
+      },
+      "LocationQuestion": {
+        "required": [
+          "allowedOptions",
+          "id",
+          "label"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EventTypeQuestion"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "canBeDeleted": {
+                "type": "boolean",
+                "readOnly": true
+              },
+              "allowedOptions": {
+                "uniqueItems": true,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/LocationOptionModel"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "MicrosoftOutlookLocation": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LocationModel"
+          }
+        ]
+      },
+      "PasswordQuestion": {
+        "required": [
+          "id",
+          "label"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EventTypeQuestion"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "canBeDeleted": {
+                "type": "boolean",
+                "readOnly": true
+              }
+            }
+          }
+        ]
+      },
+      "PhoneQuestion": {
+        "required": [
+          "id",
+          "label"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EventTypeQuestion"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "canBeDeleted": {
+                "type": "boolean",
+                "readOnly": true
+              }
+            }
+          }
+        ]
+      },
+      "PutEventTypeModel": {
+        "required": [
+          "busyIntervals",
+          "duration",
+          "hosts",
+          "name",
+          "questions",
+          "step",
+          "thirdPartyCalendars",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "slug": {
+            "maxLength": 36,
+            "minLength": 2,
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "duration": {
+            "type": "string"
+          },
+          "step": {
+            "type": "string"
+          },
+          "repeatingAvailability": {
+            "$ref": "#/components/schemas/RepeatingAvailabilityModel"
+          },
+          "maxConcurrentBookings": {
+            "minimum": 1,
+            "type": "integer",
+            "description": "Limits how many concurrent bookings for this event type can happen at the same time. E.G, If it is set to 1, after one booking, the time slot is not available anymore. If null, then unlimited bookings can be made for the same time slot (unless 'availableUnits' is set).",
+            "format": "int32"
+          },
+          "availableUnits": {
+            "minimum": 1,
+            "type": "integer",
+            "description": "For event types accepting multi-bookings, this sets the maximum number of people/resources that can book / be booked at the same time. Examples: \n- Restaurants: This is maximum number of people that can be attended at the same time.\n- Bikes store: This is the amount of bikes available.",
+            "format": "int32"
+          },
+          "minUnitsPerBooking": {
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxUnitsPerBooking": {
+            "minimum": 1,
+            "type": "integer",
+            "description": "Whenever the 'availableUnits' is set, this sets the limit of how many 'units' can be booked per booking. Examples: \n- Restaurants: This the maximum party size that can make a reservation, for example, up to groups of 10 people max.\n- City tour: The maximum number of people that each of your tour guides can manage.",
+            "format": "int32"
+          },
+          "unitsLabel": {
+            "maxLength": 32,
+            "minLength": 0,
+            "type": "string",
+            "description": "Units is a very generic concept, depending on the use case units could be referring to 'people', to 'bikes'... etc. The units label is to be able to set a custom label for the units field, that will appear in the booking page next to the 'units' selector."
+          },
+          "minBookingNotice": {
+            "type": "string"
+          },
+          "maxBookingNotice": {
+            "type": "string"
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/EmailQuestion"
+                },
+                {
+                  "$ref": "#/components/schemas/ImageQuestion"
+                },
+                {
+                  "$ref": "#/components/schemas/LocationQuestion"
+                },
+                {
+                  "$ref": "#/components/schemas/PasswordQuestion"
+                },
+                {
+                  "$ref": "#/components/schemas/PhoneQuestion"
+                },
+                {
+                  "$ref": "#/components/schemas/TextQuestion"
+                }
+              ]
+            }
+          },
+          "thirdPartyCalendars": {
+            "$ref": "#/components/schemas/ThirdPartyCalendarsModel"
+          },
+          "beforeBuffer": {
+            "type": "string"
+          },
+          "afterBuffer": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "busyIntervals": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InstantInterval"
+            }
+          },
+          "hosts": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ShareWithRequestModel"
+            }
+          },
+          "resourceRules": {
+            "$ref": "#/components/schemas/ResourceRules"
+          },
+          "notifications": {
+            "$ref": "#/components/schemas/BookingNotificationsModel"
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "When set to false, it will never be available."
+          },
+          "maxBookingsPerTimeUnit": {
+            "$ref": "#/components/schemas/MaxBookingsPerTimeUnit"
+          },
+          "location": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/BookerPhoneLocation"
+              },
+              {
+                "$ref": "#/components/schemas/BookerSelectionLocation"
+              },
+              {
+                "$ref": "#/components/schemas/FixedLocation"
+              },
+              {
+                "$ref": "#/components/schemas/GoogleMeetLocation"
+              },
+              {
+                "$ref": "#/components/schemas/MicrosoftOutlookLocation"
+              }
+            ]
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "maxLength": 256,
+              "minLength": 0,
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ReminderNotificationsModel": {
+        "required": [
+          "sms",
+          "timeBefore"
+        ],
+        "type": "object",
+        "properties": {
+          "timeBefore": {
+            "type": "string"
+          },
+          "sms": {
+            "$ref": "#/components/schemas/SmsNotificationModel"
+          }
+        }
+      },
+      "ShareWithRequestModel": {
+        "required": [
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "SmsNotificationModel": {
+        "required": [
+          "enabled"
+        ],
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TextQuestion": {
+        "required": [
+          "id",
+          "label"
+        ],
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EventTypeQuestion"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "canBeDeleted": {
+                "type": "boolean",
+                "readOnly": true
+              }
+            }
+          }
+        ]
+      },
+      "ThirdPartyCalendarsModel": {
+        "required": [
+          "toSyncBookings",
+          "toVerifyAvailability"
+        ],
+        "type": "object",
+        "properties": {
+          "toSyncBookings": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ThirdPartyCalendarId"
+            }
+          },
+          "toVerifyAvailability": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ThirdPartyCalendarId"
+            }
+          }
+        }
+      },
+      "InviteOrganizationMember": {
+        "required": [
+          "email",
+          "roles"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "roles": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "MEMBER",
+                "ADMIN"
+              ]
+            }
+          }
+        }
+      },
+      "OrganizationMembership": {
+        "required": [
+          "organizationId",
+          "roles"
+        ],
+        "type": "object",
+        "properties": {
+          "organizationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "roles": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "MEMBER",
+                "ADMIN"
+              ]
+            }
+          }
+        }
+      },
+      "TenantMembershipModel": {
+        "required": [
+          "id",
+          "role"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "ThirdPartyCalendarModel": {
+        "required": [
+          "account",
+          "id",
+          "name",
+          "primary",
+          "provider",
+          "readOnly"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string"
+          },
+          "account": {
+            "type": "string"
+          },
+          "primary": {
+            "type": "boolean"
+          },
+          "readOnly": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UserModel": {
+        "required": [
+          "clientState",
+          "email",
+          "locale",
+          "organizationMemberships",
+          "slug",
+          "tags",
+          "tenant",
+          "thirdPartyCalendars",
+          "timeZone",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "timeZone": {
+            "type": "string"
+          },
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en-US",
+              "es-ES"
+            ]
+          },
+          "thirdPartyCalendars": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ThirdPartyCalendarModel"
+            }
+          },
+          "clientState": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "tenant": {
+            "$ref": "#/components/schemas/TenantMembershipModel"
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "organizationMemberships": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrganizationMembership"
+            }
+          }
+        }
+      },
+      "GoogleConsentBody": {
+        "required": [
+          "authCode"
+        ],
+        "type": "object",
+        "properties": {
+          "authCode": {
+            "type": "string"
+          }
+        }
+      },
+      "WebhookBody": {
+        "required": [
+          "body",
+          "name",
+          "version"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "body": {
+            "type": "object"
+          }
+        }
+      },
+      "ExternalBookingAnsweredQuestionModel": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "answer": {
+            "type": "string"
+          }
+        }
+      },
+      "ExternalBookingEventTypeModel": {
+        "required": [
+          "id",
+          "tags"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ExternalBookingEventTypeOwnerModel": {
+        "required": [
+          "id",
+          "tags"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ExternalBookingValidationModel": {
+        "required": [
+          "answeredQuestions",
+          "eventType",
+          "eventTypeOwner",
+          "id",
+          "interval"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "eventType": {
+            "$ref": "#/components/schemas/ExternalBookingEventTypeModel"
+          },
+          "eventTypeOwner": {
+            "$ref": "#/components/schemas/ExternalBookingEventTypeOwnerModel"
+          },
+          "interval": {
+            "$ref": "#/components/schemas/InstantInterval"
+          },
+          "answeredQuestions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalBookingAnsweredQuestionModel"
+            }
+          },
+          "units": {
+            "type": "integer",
+            "description": "Booked units.",
+            "format": "int32"
+          }
+        }
+      },
+      "ThirdPartyConsentBody": {
+        "required": [
+          "authCode",
+          "provider"
+        ],
+        "type": "object",
+        "properties": {
+          "authCode": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string",
+            "enum": [
+              "MICROSOFT"
+            ]
+          }
+        }
+      },
+      "CreateBookingRequest": {
+        "required": [
+          "answers",
+          "eventTypeId",
+          "start"
+        ],
+        "type": "object",
+        "properties": {
+          "eventTypeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "bookerEmail": {
+            "type": "string",
+            "deprecated": true
+          },
+          "answers": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "notes": {
+            "maxLength": 2048,
+            "minLength": 0,
+            "type": "string"
+          },
+          "units": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "CancelBookingRequest": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "maxLength": 1024,
+            "minLength": 0,
+            "type": "string"
+          }
+        }
+      },
+      "CreateApiKeyBody": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateApiKeyResponseModel": {
+        "required": [
+          "id",
+          "key"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "key": {
+            "type": "string"
+          }
+        }
+      },
+      "AcceptedOrganizationInvite": {
+        "required": [
+          "code"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          }
+        }
+      },
+      "PatchTenantMembershipModel": {
+        "required": [
+          "role"
+        ],
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": [
+              "MEMBER",
+              "ADMIN"
+            ]
+          }
+        }
+      },
+      "PatchUserModel": {
+        "required": [
+          "tenant"
+        ],
+        "type": "object",
+        "properties": {
+          "tenant": {
+            "$ref": "#/components/schemas/PatchTenantMembershipModel"
+          }
+        }
+      },
+      "PatchOrganizationMembership": {
+        "required": [
+          "roles"
+        ],
+        "type": "object",
+        "properties": {
+          "roles": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "MEMBER",
+                "ADMIN"
+              ]
+            }
+          }
+        }
+      },
+      "ListUsersResponse": {
+        "required": [
+          "users"
+        ],
+        "type": "object",
+        "properties": {
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserModel"
+            }
+          }
+        }
+      },
+      "ThirdPartyCalendarEvent": {
+        "required": [
+          "calendar",
+          "interval"
+        ],
+        "type": "object",
+        "properties": {
+          "calendar": {
+            "$ref": "#/components/schemas/ThirdPartyCalendarModel"
+          },
+          "interval": {
+            "$ref": "#/components/schemas/InstantInterval"
+          }
+        }
+      },
+      "ThirdPartyCalendarEventsList": {
+        "required": [
+          "events"
+        ],
+        "type": "object",
+        "properties": {
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ThirdPartyCalendarEvent"
+            }
+          }
+        }
+      },
+      "PublicProfile": {
+        "required": [
+          "id",
+          "name",
+          "slug"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicProfileLink"
+            }
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Resource": {
+        "required": [
+          "bookingRules",
+          "id",
+          "name",
+          "tags"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "bookingRules": {
+            "$ref": "#/components/schemas/BookingRules"
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResourcesList": {
+        "required": [
+          "resources"
+        ],
+        "type": "object",
+        "properties": {
+          "resources": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Resource"
+            }
+          }
+        }
+      },
+      "ResourceGroupModel": {
+        "required": [
+          "id",
+          "name",
+          "resources",
+          "tags"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "resources": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Resource"
+            }
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResourceGroupsListModel": {
+        "required": [
+          "resourceGroups"
+        ],
+        "type": "object",
+        "properties": {
+          "resourceGroups": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceGroupModel"
+            }
+          }
+        }
+      },
+      "PublicProfilesList": {
+        "required": [
+          "publicProfiles"
+        ],
+        "type": "object",
+        "properties": {
+          "publicProfiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicProfile"
+            }
+          }
+        }
+      },
+      "Organization": {
+        "required": [
+          "id",
+          "name",
+          "tags"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string",
+            "format": "uri"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "OrganizationsList": {
+        "required": [
+          "organizations"
+        ],
+        "type": "object",
+        "properties": {
+          "organizations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Organization"
+            }
+          }
+        }
+      },
+      "OrganizationMember": {
+        "required": [
+          "email",
+          "id",
+          "roles"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string"
+          },
+          "roles": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "MEMBER",
+                "ADMIN"
+              ]
+            }
+          }
+        }
+      },
+      "OrganizationMembersList": {
+        "required": [
+          "members"
+        ],
+        "type": "object",
+        "properties": {
+          "members": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrganizationMember"
+            }
+          }
+        }
+      },
+      "EventTypeListItem": {
+        "required": [
+          "fullSlug",
+          "id",
+          "name",
+          "slug",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "fullSlug": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "EventTypesListBody": {
+        "required": [
+          "eventTypes"
+        ],
+        "type": "object",
+        "properties": {
+          "eventTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EventTypeListItem"
+            }
+          }
+        }
+      },
+      "EventTypeHostCalendarModel": {
+        "required": [
+          "account",
+          "id",
+          "name",
+          "primary",
+          "provider",
+          "readOnly",
+          "syncBookings",
+          "verifyAvailability"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string"
+          },
+          "account": {
+            "type": "string"
+          },
+          "primary": {
+            "type": "boolean"
+          },
+          "readOnly": {
+            "type": "boolean"
+          },
+          "syncBookings": {
+            "type": "boolean"
+          },
+          "verifyAvailability": {
+            "type": "boolean"
+          }
+        }
+      },
+      "EventTypeHostModel": {
+        "required": [
+          "calendars",
+          "email",
+          "id",
+          "role"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "OWNER",
+              "COLLABORATOR"
+            ]
+          },
+          "calendars": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EventTypeHostCalendarModel"
+            }
+          }
+        }
+      },
+      "GetEventTypeModel": {
+        "required": [
+          "busyIntervals",
+          "duration",
+          "enabled",
+          "fullSlug",
+          "hosts",
+          "id",
+          "name",
+          "notifications",
+          "questions",
+          "slug",
+          "step",
+          "tags",
+          "thirdPartyCalendars",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "fullSlug": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "string"
+          },
+          "step": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "description": "It defines the duration of the event type.\nAllowed format is ISO-8601 duration, maximum unit allowed is days.",
+            "example": "PT1H"
+          },
+          "repeatingAvailability": {
+            "$ref": "#/components/schemas/RepeatingAvailabilityModel"
+          },
+          "maxConcurrentBookings": {
+            "type": "integer",
+            "description": "Limits how many concurrent bookings for this event type can happen at the same time. E.G, If it is set to 1, after one booking, the time slot is not available anymore. If null, then unlimited bookings can be made for the same time slot (unless 'availableUnits' is set).",
+            "format": "int32"
+          },
+          "availableUnits": {
+            "type": "integer",
+            "description": "For event types accepting multi-bookings, this sets the maximum number of people/resources that can book / be booked at the same time. Examples: \n- Restaurants: This is maximum number of people that can be attended at the same time.\n- Bikes store: This is the amount of bikes available.",
+            "format": "int32"
+          },
+          "minUnitsPerBooking": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxUnitsPerBooking": {
+            "type": "integer",
+            "description": "Whenever the 'availableUnits' is set, this sets the limit of how many 'units' can be booked per booking. Examples: \n- Restaurants: This the maximum party size that can make a reservation, for example, up to groups of 10 people max.\n- City tour: The maximum number of people that each of your tour guides can manage.",
+            "format": "int32"
+          },
+          "unitsLabel": {
+            "type": "string",
+            "description": "Units is a very generic concept, depending on the use case units could be referring to 'people', to 'bikes'... etc. The units label is to be able to set a custom label for the units field, that will appear in the booking page next to the 'units' selector."
+          },
+          "minBookingNotice": {
+            "type": "string"
+          },
+          "maxBookingNotice": {
+            "type": "string"
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/EmailQuestion"
+                },
+                {
+                  "$ref": "#/components/schemas/ImageQuestion"
+                },
+                {
+                  "$ref": "#/components/schemas/LocationQuestion"
+                },
+                {
+                  "$ref": "#/components/schemas/PasswordQuestion"
+                },
+                {
+                  "$ref": "#/components/schemas/PhoneQuestion"
+                },
+                {
+                  "$ref": "#/components/schemas/TextQuestion"
+                }
+              ]
+            }
+          },
+          "thirdPartyCalendars": {
+            "$ref": "#/components/schemas/ThirdPartyCalendarsModel"
+          },
+          "beforeBuffer": {
+            "type": "string"
+          },
+          "afterBuffer": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "busyIntervals": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InstantInterval"
+            }
+          },
+          "hosts": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EventTypeHostModel"
+            }
+          },
+          "resourceRules": {
+            "$ref": "#/components/schemas/ResourceRules"
+          },
+          "notifications": {
+            "$ref": "#/components/schemas/BookingNotificationsModel"
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "When set to false, it will never be available."
+          },
+          "location": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/BookerPhoneLocation"
+              },
+              {
+                "$ref": "#/components/schemas/BookerSelectionLocation"
+              },
+              {
+                "$ref": "#/components/schemas/FixedLocation"
+              },
+              {
+                "$ref": "#/components/schemas/GoogleMeetLocation"
+              },
+              {
+                "$ref": "#/components/schemas/MicrosoftOutlookLocation"
+              }
+            ]
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "maxBookingsPerTimeUnit": {
+            "$ref": "#/components/schemas/MaxBookingsPerTimeUnit"
+          }
+        }
+      },
+      "EvaluatedTimeSlotModel": {
+        "required": [
+          "end",
+          "score",
+          "start"
+        ],
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "score": {
+            "type": "number",
+            "format": "float"
+          }
+        }
+      },
+      "EventTypeAvailabilityModel": {
+        "required": [
+          "eventTypeTags",
+          "id",
+          "name",
+          "questions",
+          "timeSlots"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EventTypeQuestion"
+            }
+          },
+          "timeSlots": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EvaluatedTimeSlotModel"
+            }
+          },
+          "imageUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "maxConcurrentBookings": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "availableUnits": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxUnitsPerBooking": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unitsLabel": {
+            "type": "string"
+          },
+          "eventTypeTimeZone": {
+            "type": "string"
+          },
+          "eventTypeTags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "AnsweredQuestionModel": {
+        "required": [
+          "id",
+          "label"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "answer": {
+            "type": "string"
+          }
+        }
+      },
+      "BookedEventTypeModel": {
+        "required": [
+          "id",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "BookedResourceModel": {
+        "required": [
+          "id",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "BookerModel": {
+        "required": [
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "BookingsList": {
+        "required": [
+          "bookings"
+        ],
+        "type": "object",
+        "properties": {
+          "bookings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicBookingModel"
+            }
+          }
+        }
+      },
+      "CancellationModel": {
+        "required": [
+          "cancelledAt",
+          "cancelledBy"
+        ],
+        "type": "object",
+        "properties": {
+          "cancelledBy": {
+            "type": "string",
+            "enum": [
+              "ORGANIZER",
+              "BOOKER"
+            ]
+          },
+          "cancelledAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "description": "Not null if the booking has been cancelled."
+      },
+      "PublicBookingModel": {
+        "required": [
+          "answeredQuestions",
+          "bookedResources",
+          "booker",
+          "eventType",
+          "id",
+          "interval"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "eventType": {
+            "$ref": "#/components/schemas/BookedEventTypeModel"
+          },
+          "interval": {
+            "$ref": "#/components/schemas/InstantInterval"
+          },
+          "booker": {
+            "$ref": "#/components/schemas/BookerModel"
+          },
+          "answeredQuestions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AnsweredQuestionModel"
+            }
+          },
+          "notes": {
+            "type": "string",
+            "description": "Additional notes added by the booker when submitting the booking."
+          },
+          "units": {
+            "type": "integer",
+            "description": "Booked units.",
+            "format": "int32"
+          },
+          "cancellation": {
+            "$ref": "#/components/schemas/CancellationModel"
+          },
+          "bookedResources": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BookedResourceModel"
+            }
+          },
+          "conferenceLink": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "ApiKeyModel": {
+        "required": [
+          "id",
+          "key"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "key": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiKeysListModel": {
+        "required": [
+          "apiKeys"
+        ],
+        "type": "object",
+        "properties": {
+          "apiKeys": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApiKeyModel"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "HttpAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT or TimeTime API Key"
+      }
+    }
+  }
+}
